@@ -3,6 +3,7 @@ zestaw = 4;
 if zestaw == 1
     T1=1;T2=1;T3=1;T4=0.1;
 elseif zestaw == 2
+    
     T1=1;T2=1;T3=0.1;T4=0.05;
 elseif zestaw == 3
     T1=1;T2=0.1;T3=0.05;T4=0.025;
@@ -11,6 +12,7 @@ elseif zestaw == 4
 elseif zestaw == 5
     T1=5;T2=0.1;T3=0.05;T4=0.025;   
 end
+T_zaklocenia=25;
 T_mianownika=[T1, T2, T3, T4];
 k=1;
 
@@ -19,8 +21,6 @@ T_licznika=[0];
 Tau=0;
 Tp=0;
 %Wzmocnienia statyczne transmitancji obiektu
-
-
 
 suma_T_licznika=0;
 suma_T_mianownika=0;
