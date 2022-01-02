@@ -26,6 +26,31 @@ bieguny_2=eig(Alpha);
 %step(L2,M2)
 [y,t,x]=step(A,B,C,D);
 [y2,t,x2]=step(Alpha,Beta,Gamma,Delta);
-plot(t,x,t,y,t,x2,t,y2); %nie s¹ bo to inne zmienne stanu
+%plot(t,x,t,y,t,x2,t,y2); %nie s¹ bo to inne zmienne stanu
 %% Podpunkt 3
+[M,a2]=eig(Alpha);
+P_diag=M^-1;
+A2=P_diag*Alpha*inv(P_diag);
+B2=P_diag*Beta;
+C2=Gamma*inv(P_diag);
+D2=Delta;
+%% Podpunkt 4
+%[y,M] charakterystyka statyczna
+sys=ss(Alpha, Beta, Gamma, Delta);
+y_stat=-10:0.1:10;
+M_stat=[];
+for i=1:length(y_stat)
+[M,t,x]=step(sys*y_stat(i));
+M_stat(i)=M(end);
+end
+%plot(y_stat,M_stat);
+%wzmocnienie_statyczne=2 jako wsp. kierunkowy char. statycznej i wyliczony
+%z transmitancji.
+%% Podpunkt 5
+[y,t,x]=step(sys);
+%plot(x(:,1),x(:,2))
+%% Podpunkt 6
+Tp=0.01;
+tustin=c2d(sys,Tp,'Tustin');
+
 
