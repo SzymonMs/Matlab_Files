@@ -1,6 +1,7 @@
 # Matlab_Files
 <p align="left"> <a href="https://www.mathworks.com" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="Matlab" width="50" height="50"/> </a>
-<p align="left"> <a href="https://www.scilab.org" target="_blank"> <img src="https://user-images.githubusercontent.com/84814415/148458058-7e91f930-ffcd-43d5-b78b-82e00c8d1579.png" alt="Scilab" width="50" height="50"/> </a>
+<p align="left"> <a href="https://www.scilab.org" target="_blank"> <img src="https://user-images.githubusercontent.com/84814415/148458144-9eb288a5-0928-4b9d-b922-5a840e782202.png" alt="Scilab" width="50" height="50"/> </a>
+  
 Different files created in Matlab- List:
 
 1.Automation_elements- transfer functions of basic elements of automatics
