@@ -1,5 +1,5 @@
 # Matlab_Files
-<p align="left"> <a href="https://www.mathworks.com" target="_blank"> <img src="https://user-images.githubusercontent.com/84814415/148457612-77f94f15-b725-4b5a-9a44-36cefa44be14.png" alt="Matlab" width="40" height="40"/> </a>
+<p align="left"> <a href="https://www.mathworks.com" target="_blank"> <img src="https://user-images.githubusercontent.com/84814415/148457788-54766492-3e03-46cb-aa22-fda43a95acf6.png" alt="Matlab" width="40" height="40"/> </a>
  
 Different files created in Matlab- List:
 
