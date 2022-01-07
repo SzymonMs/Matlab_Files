@@ -24,3 +24,5 @@ Different files created in Matlab- List:
 10.TS_LAB_REPEAT- revision of material for studies 
 
 11.Wind-up- control system with anti-windup block
+  
+12.Newton_Interpolation
