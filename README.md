@@ -28,3 +28,5 @@ Different files created in Matlab- List:
 12.Newton_Interpolation
   
 13.Van der Pol oscillator- model of oscillator with non-linear damping
+  
+14.Duffing equation- non-linear model of mass, hard spring and shock absorption connected in series
