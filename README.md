@@ -26,3 +26,5 @@ Different files created in Matlab- List:
 11.Wind-up- control system with anti-windup block
   
 12.Newton_Interpolation
+  
+13.Van der Pol oscillator- model of oscillator with non-linear damping
