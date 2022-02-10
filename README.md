@@ -31,4 +31,4 @@ Different files created in Matlab- List:
   
 14.Duffing equation- non-linear model of mass, hard spring and shock absorption connected in series
   
-15.Regulators- PID, PID+Hffr, IP, DP, IDP regulator and SODT
+15.Regulators- PID, PID+Hffr, IP, DP, IDP regulator and SODT and theory of control system.
