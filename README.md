@@ -34,3 +34,5 @@ Different files created in Matlab- List:
 15.Regulators- PID, PID+Hffr, IP, DP, IDP regulator and SODT and theory of control system.
 
 16.Deep_Learning_Onramp- Files from MathWorks course about Deep Learning https://matlabacademy.mathworks.com/details/deep-learning-onramp/deeplearning
+
+17.Machine_Learning_Onramp- Files from MathWorks course about Machine Learning https://matlabacademy.mathworks.com/details/machine-learning-onramp/machinelearning
