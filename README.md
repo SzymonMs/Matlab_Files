@@ -38,3 +38,5 @@ Different files created in Matlab- List:
 17.Machine_Learning_Onramp- Files from MathWorks course about Machine Learning https://matlabacademy.mathworks.com/details/machine-learning-onramp/machinelearning
  
 18.Wireless_Communications_Onramp- Files from MathWorks course about Wireless Communication https://matlabacademy.mathworks.com/details/wireless-communications-onramp/wireless
+  
+19.Signal_Processing- Mean/expected value, variance, fft, correlation, stochastic and ergodic process, Perseval theorem, power spectral density estimators
