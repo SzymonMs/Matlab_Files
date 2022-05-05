@@ -18,9 +18,9 @@ Tp=0.01;
 N=4001;
 t=0:Tp:(N-1)*Tp;
 
-%% Model odwzoru_W_estowania statycznego w zaleønoúci od rodzaju szumu
-u = u_C_est; %%TUTAJ WPISZ ODPOWIEDNI SYGNA£ U
-y = y_C_est; %%TUTAJ WPISZ ODPOWIEDNI SYGNA£ Y
+%% Model odwzoru_W_estowania statycznego w zale≈ºno≈õci od rodzaju szumu
+u = u_C_est; %%TUTAJ WPISZ ODPOWIEDNI SYGNA≈Å U
+y = y_C_est; %%TUTAJ WPISZ ODPOWIEDNI SYGNA≈Å Y
 data = y_C_est; %%TUTAJ WPISZE ODPOWIEDNIE data
 fi = [];
 FI = [];
@@ -56,7 +56,7 @@ p_N_IV = inv(Z'*FI)*Z'*y;
 fup2 = [];
 fup2(1)=0;
 for i = 2:size(data,1)
-    fup2(i) = p_N_IV(1)*y(i-1)+p_N_IV(2)*u(i-1);
+    fup2(i) = p_N_IV(1)*fup(i-1)+p_N_IV(2)*u(i-1);
 end
 plot(u,fup2,'DisplayName','LS');
 hold on
