@@ -3,42 +3,48 @@
   
 Different files created in Matlab- List:
 
-1.Automation_elements- transfer functions of basic elements of automatics
+1. Automation_elements- transfer functions of basic elements of automatics
 
-2.Control_System- control system with PI and ISE
+2. Control_System- control system with PI and ISE
 
-3.DC_model- DC motor model
+3. DC_model- DC motor model
 
-4.High-order inertia- High-order inertia and PI
+4. High-order inertia- High-order inertia and PI
 
-5.Integrator_proportional_regulator- Integrator with PI and FF
+5. Integrator_proportional_regulator- Integrator with PI and FF
 
-6.Kalman- Kalman filter
+6. Kalman- Kalman filter
 
-7.Lapunov- Lapunov's second method for stability testing
+7. Lapunov- Lapunov's second method for stability testing
 
-8.Luenberger- control system with Luenberger observer, inverse reference model and state feedback 
+8. Luenberger- control system with Luenberger observer, inverse reference model and state feedback 
 
-9.Optimal_Control_LQ- Linear–quadratic method
+9. Optimal_Control_LQ- Linear–quadratic method
 
-10.TS_LAB_REPEAT- revision of material for studies 
+10. TS_LAB_REPEAT- revision of material for studies 
 
-11.Wind-up- control system with anti-windup block
+11. Wind-up- control system with anti-windup block
   
-12.Newton_Interpolation
+12. Newton_Interpolation
   
-13.Van der Pol oscillator- model of oscillator with non-linear damping
+13. Van der Pol oscillator- model of oscillator with non-linear damping
   
-14.Duffing equation- non-linear model of mass, hard spring and shock absorption connected in series
+14. Duffing equation- non-linear model of mass, hard spring and shock absorption connected in series
   
-15.Regulators- PID, PID+Hffr, IP, DP, IDP regulator and SODT and theory of control system.
+15. Regulators- PID, PID+Hffr, IP, DP, IDP regulator and SODT and theory of control system.
 
-16.Deep_Learning_Onramp- Files from MathWorks course about Deep Learning https://matlabacademy.mathworks.com/details/deep-learning-onramp/deeplearning
+16. Deep_Learning_Onramp- Files from MathWorks course about Deep Learning https://matlabacademy.mathworks.com/details/deep-learning-onramp/deeplearning
 
-17.Machine_Learning_Onramp- Files from MathWorks course about Machine Learning https://matlabacademy.mathworks.com/details/machine-learning-onramp/machinelearning
+17. Machine_Learning_Onramp- Files from MathWorks course about Machine Learning https://matlabacademy.mathworks.com/details/machine-learning-onramp/machinelearning
  
-18.Wireless_Communications_Onramp- Files from MathWorks course about Wireless Communication https://matlabacademy.mathworks.com/details/wireless-communications-onramp/wireless
+18. Wireless_Communications_Onramp- Files from MathWorks course about Wireless Communication https://matlabacademy.mathworks.com/details/wireless-communications-onramp/wireless
   
-19.Signal_Processing- Mean/expected value, variance, fft, correlation, stochastic and ergodic process, Perseval theorem, power spectral density estimators
+19. Signal_Processing- Mean/expected value, variance, fft, correlation, stochastic and ergodic process, Perseval theorem, power spectral density estimators
 
-20.Identification- Finding transfer function parameters of objects based on their step responses.
+20. TF_Identification- Finding transfer function parameters of objects based on their step responses.
+
+21. LS_and_IV_Identification- LS and IV
+
+22. Recursive_Identification- RLS, RIV, RLS_lambda, RIV_lambda, Kalman Filter
+
+23. Identification_Final_Project- Identification real object Cascade Tank- linear methods
