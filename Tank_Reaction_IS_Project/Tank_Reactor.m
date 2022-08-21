@@ -77,7 +77,7 @@ ylabel('h');
 %% LS and IV
 % First proposition: y(n) = -p1 * y(n-1) + p2 * u(n)
 % Second proposition: y(n) = -p1 * y(n-1) -p2 * y(n-2) + p3 * u(n-1)
-PROPOSITION = 2;
+PROPOSITION = 6;
 
 fi = [];
 FI = [];
@@ -110,8 +110,12 @@ end
 p_N_IV = inv(Z'*FI)*Z'*y;
 ym2 = [];
 ym2(1) = 0;
+pred = [];
+pred(1) = 0;
 for i = dp:M
-    ym2(i) = -p_N_IV(1)*ym2(i-1)+p_N_IV(2)*CaVal(i);
+    ym2(i) = -p_N_IV(1)*ym2(i-1)+p_N_IV(2)*uVal(i);
+    pred(i) = -p_N_IV(1)*CaVal(i-1)+p_N_IV(2)*uVal(i);
+
 end
 end
 
@@ -142,49 +146,185 @@ p_N_IV = inv(Z'*FI)*Z'*y;
 ym2 = [];
 ym2(1) = 0;
 ym2(2) = 0;
+pred = [];
+pred(1) = 0;
+pred(2) = 0;
 for i = dp:M
-    ym2(i) = -p_N_IV(1)*ym2(i-1)+-p_N_IV(2)*ym2(i-2)+p_N_IV(3)*CaVal(i-1);
+    ym2(i) = -p_N_IV(1)*ym2(i-1)+-p_N_IV(2)*ym2(i-2)+p_N_IV(3)*uVal(i-1);
+    pred(i) = -p_N_IV(1)*CaVal(i-1)+-p_N_IV(2)*CaVal(i-2)+p_N_IV(3)*uVal(i-1);
+
 end
  end
-
- if PROPOSITION == 3
- dp = 4;
- FI(1,:) = [0,0,0,0];
- FI(2,:) = [0,0,0,0];
- FI(3,:) = [0,0,0,0];
- for i = dp:M
-    fi = [-y(i-1),-y(i-2),-y(i-3), u(i-1)];
-    FI(i,:) = fi;
-    fi = [];
- end
-p_N_LS = pinv(FI)*y;
+%%Kalman Filter
+%  Third Proposition: y(n) = -p1*y(n-1) - p2*y(n-2) - p3*y(n-3) + p4*u(n) +
+%  p5* u(n-1)
+% 4th Proposition: y(n) = -p1*y(n-1) - p2*y(n-2) +p3*u(n)
+% 5th Proposition: y(n) = -p1*y(n-1) - p2*y(n-2)-p3*y(n-3) +p4*u(n) 
+% 6th Proposition: y(n) =  -p1*y(n-1) - p2*y(n-2) - p3*y(n-3) - p4*y(n-4) +
+%  -p5* y(n-5) - p6* y(n-6) + p7*u(n) - Possible OverFitting!
+if PROPOSITION == 3
+dp=5;
+ro = 1;
+P = ro*eye(dp);
+p=[0;0;0;0;0];
 ym = [];
 ym(1) = 0;
 ym(2) = 0;
 ym(3) = 0;
+ym(4) = 0;
+V = diag([0.00,0.00,0.00,0.00,.001]);
+k = [1;1;1;1;1];
+ppp = [];
 for i = dp:M
-    ym(i) = -p_N_LS(1)*ym(i-1)-p_N_LS(2)*ym(i-2)-p_N_LS(3)*ym(i-3) + p_N_LS(4)*u(i-1);
+    fi = [-y(i-1);-y(i-2);-y(i-3);u(i); u(i-1)];
+    P = P+V;
+    p = p+k*eps;
+    eps = y(i)-fi'*p;
+    k = P*fi*pinv(1+fi'*P*fi);
+    P = P-k*fi'*P;
+    ym(i) = -p(1)*ym(i-1)-p(2)*ym(i-2)-p(3)*ym(i-3)+p(4)*u(i)+p(5)*u(i-1);
+    ppp(i,:)=p;
 end
-Z(1,:) = [0,0,0,0];
-Z(2,:) = [0,0,0,0];
-Z(3,:) = [0,0,0,0];
-for i = dp:M
-    z = [-ym(i-1),-ym(i-2),-ym(i-3), u(i-1)];
-    Z(i,:) = z;
-    z = [];
-end
-p_N_IV = inv(Z'*FI)*Z'*y;
-ym2 = [];
+ym2=[];
 ym2(1) = 0;
 ym2(2) = 0;
 ym2(3) = 0;
+ym2(4) = 0;
+pred = [];
+pred(1) = 0;
+pred(2) = 0;
+pred(3) = 0;
+pred(4) = 0;
+for i=dp:M
+   ym2(i)= -p(1)*ym2(i-1)-p(2)*ym2(i-2)-p(3)*ym2(i-3)+p(4)*uVal(i)+p(5)*uVal(i-1);
+   ym2(i)= -p(1)*CaVal(i-1)-p(2)*CaVal(i-2)-p(3)*CaVal(i-3)+p(4)*uVal(i)+p(5)*uVal(i-1);
+
+end
+end
+
+if PROPOSITION == 4
+dp=3;
+ro = 1;
+P = ro*eye(dp);
+p=[0;0;0];
+ym = [];
+ym(1) = 0;
+ym(2) = 0;
+V = diag([0.001,0.001,0.001]);
+k = [1;1;1];
+ppp = [];
 for i = dp:M
-    ym2(i) = -p_N_IV(1)*ym2(i-1)+-p_N_IV(2)*ym2(i-2)-p_N_IV(3)*ym2(i-3)+p_N_IV(4)*qVal(i-1);
+    fi = [-y(i-1);-y(i-2);u(i)];
+    P = P+V;
+    p = p+k*eps;
+    eps = y(i)-fi'*p;
+    k = P*fi*pinv(1+fi'*P*fi);
+    P = P-k*fi'*P;
+    ym(i) = -p(1)*ym(i-1)-p(2)*ym(i-2)+p(3)*u(i);
+    ppp(i,:)=p;
+end
+ym2=[];
+ym2(1) = 0;
+ym2(2) = 0;
+for i=dp:M
+   ym2(i)= -p(1)*ym2(i-1)-p(2)*ym2(i-2)-p(3)*uVal(i);
+end
+end
+
+if PROPOSITION == 5
+dp=4;
+ro = 100;
+P = ro*eye(dp);
+p=[0;0;0;0];
+ym = [];
+ym(1) = 0.08;
+ym(2) = 0.08;
+ym(3) = 0.08;
+V = diag([0.0001,0.0001,0.0001,0.0001]);
+k = [1;1;1;1];
+ppp = [];
+for i = dp:M
+    fi = [-y(i-1);-y(i-2);-y(i-3);u(i)];
+    P = P+V;
+    p = p+k*eps;
+    eps = y(i)-fi'*p;
+    k = P*fi*pinv(1+fi'*P*fi);
+    P = P-k*fi'*P;
+    ym(i) = -p(1)*ym(i-1)-p(2)*ym(i-2)-p(3)*ym(i-3)+p(4)*u(i);
+    ppp(i,:)=p;
+end
+ym2=[];
+ym2(1) = 0.08;
+ym2(2) = 0.08;
+ym2(3) = 0.08;
+pred = [];
+pred(1) = 0.08;
+pred(2) = 0.08;
+pred(3) = 0.08;
+for i=dp:M
+   ym2(i)= -p(1)*ym2(i-1)-p(2)*ym2(i-2)-p(3)*ym2(i-3)+p(4)*uVal(i);
+   pred(i)= -p(1)*CaVal(i-1)-p(2)*CaVal(i-2)-p(3)*CaVal(i-3)+p(4)*uVal(i);
+end
+end
+if PROPOSITION == 6
+dp=7;
+ro = 100;
+P = ro*eye(dp);
+p=[0;0;0;0;0;0;0];
+ym = [];
+ym(1) = 0;
+ym(2) = 0;
+ym(3) = 0;
+ym(4) = 0;
+ym(5) = 0;
+ym(6) = 0;
+V = diag([0.0001,0.0001,0.0001,0.0001,0.0001,0.0001,0.0001]);
+k = [1;1;1;1;1;1;1];
+ppp = [];
+for i = dp:M
+    fi = [-y(i-1);-y(i-2);-y(i-3);-y(i-4);-y(i-5);-y(i-6);u(i)];
+    P = P+V;
+    p = p+k*eps;
+    eps = y(i)-fi'*p;
+    k = P*fi*pinv(1+fi'*P*fi);
+    P = P-k*fi'*P;
+    ym(i) = -p(1)*ym(i-1)-p(2)*ym(i-2)-p(3)*ym(i-3)-p(4)*ym(i-4)-p(5)*ym(i-5)-p(6)*ym(i-6)+p(7)*u(i);
+    ppp(i,:)=p;
+end
+ym2=[];
+ym2(1) = 0.08;
+ym2(2) = 0.08;
+ym2(3) = 0.08;
+ym2(4) = 0.08;
+ym2(5) = 0.08;
+ym2(6) = 0.08;
+pred = [];
+pred(1) = 0.08;
+pred(2) = 0.08;
+pred(3) = 0.08;
+pred(4) = 0.08;
+pred(5) = 0.08;
+pred(6) = 0.08;
+
+for i=dp:M
+   ym2(i)= -p(1)*ym2(i-1)-p(2)*ym2(i-2)-p(3)*ym2(i-3)-p(4)*ym2(i-4)-p(5)*ym2(i-5)-p(6)*ym2(i-6)+p(7)*uVal(i);
+   pred(i)= -p(1)*CaVal(i-1)-p(2)*CaVal(i-2)-p(3)*CaVal(i-3)-p(4)*CaVal(i-4)-p(5)*CaVal(i-5)-p(6)*CaVal(i-6)+p(7)*uVal(i);
 end
 end
 figure;
-plot(t,CaVal,t,ym2);
-title('model - IV method');
-legend('Ca','IV_{model}');
+plot(t,CaVal,t,ym2,t,pred);
+title('model - Kalman method');
+legend('Ca','IV_{model}','Prediction');
 xlabel('t')
 ylabel('Ca')
+e = CaVal-ym2';
+Vn = (e'*e)/M;
+AIC = M*log(Vn)+2*dp;
+SIC = M*log(Vn)+2*dp*log(M);
+FPE = Vn*(1+dp/M)/(1-dp/M);
+Mi=1/M*(Z'*FI);
+cond=sqrt(max(eig(Mi'*Mi)))/sqrt(min(eig(Mi'*Mi)));
+my = mean(CaVal)*ones(1,M)';
+Jfit = (1-norm(e)/norm(CaVal-my))*100;
+XXXX=sprintf('AIC: %f \nSIC: %f \nFPE: %f \ncond: %f \nV*: %f\nJ_{FIT}: %f',AIC,SIC,FPE,cond,Vn,Jfit);
+disp(XXXX);
