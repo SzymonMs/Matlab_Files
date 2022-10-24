@@ -48,3 +48,13 @@ Different files created in Matlab- List:
 22. Recursive_Identification- RLS, RIV, RLS_lambda, RIV_lambda, Kalman Filter
 
 23. Identification_Final_Project- Identification real object Cascade Tank- linear methods
+  
+24. PI+ Tacho- PI and Tacho
+  
+25. Pendulum- Pendulum simulation
+ 
+26. TS_LAB_REPEAT- Repeat for University
+  
+27. Optimization_Onramp- Files from MathWorks course about Optimiation
+ 
+28. Tank_Reaction_IS_Project- Linear Identification of system
