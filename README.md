@@ -58,3 +58,5 @@ Different files created in Matlab- List:
 27. Optimization_Onramp- Files from MathWorks course about Optimiation
  
 28. Tank_Reaction_IS_Project- Linear Identification of system
+
+29. Rossler Attractor
