@@ -101,16 +101,34 @@ for i = 1:3
     end
 end
 
+%% CSV FILE
+U = U';
+I = I';
+dataCell = cat(2,U,I);
+writematrix(dataCell,"data.csv");
+
 %% TESTS
 % Y = fft(I(3,:));
 % T = 1/25000;
 % L = Ts*1000*timeMax;
 % t = (0:L)*T;
 % plot(Ts*1000/L*(0:L),abs(Y))
-plot(time,U(1,:),time,U(2,:),time,U(3,:))
+%plot(time,U(1,:),time,U(2,:),time,U(3,:))
 
 
 %% Extra functions
+
+% Function : CheckHarmonicsParameters
+% Inputs:
+%   text                : a string represent voltage/current (inter)harmonic groupe
+%   cellOfOrders        : a cell aray represent orders voltage/current (inter)harmonic
+%   cellOfValue         : a cell array represent values of voltage/current (inter)harmonic
+%   cellOfAngles        : a cell array represent angles of voltage/current (inter)harmonic
+%   stateOfUsing        : 0 if voltage/current (inter)harmonics are not in
+%                         use, 1 if voltage/current (inter)harmonic are in
+%                         signal
+% Output:
+%   correctHarmonics    : 0 if sth is wrong or 1 if all is good
 function correctHarmonics = CheckHarmonicsParameters(text,cellOfOrders,cellOfValue,cellOfAngles,stateOfUsing)
 if stateOfUsing == 1
     correctHarmonics = 1;
