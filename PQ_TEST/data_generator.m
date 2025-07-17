@@ -17,7 +17,7 @@ nominalFrequency = 50;
 voltageAngles = [0 -120 120]; % [°]
 currentAngles = [0 -120 120]; % [°]
 %% Time parameters
-Ts = 250; % [kSps] kilo samples per seconds
+Ts = 0.25; % [kSps] kilo samples per seconds
 timeMax = 1; % [s]
 
 %% Mains Signaling Voltage
@@ -102,10 +102,7 @@ for i = 1:3
 end
 
 %% CSV FILE
-U = U';
-I = I';
-dataCell = cat(2,U,I);
-writematrix(dataCell,"data.csv");
+writetable(table(cat(2,U',I')),"data.csv");
 
 %% TESTS
 % Y = fft(I(3,:));
