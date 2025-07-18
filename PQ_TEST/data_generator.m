@@ -11,14 +11,14 @@
 clear all;
 clc;
 %% Basic Energy parameters
-nominalVoltages = [57.7 57.7 57.7]; % [V]
-nominalCurrents = [1 1 1]; %[A]
+nominalVoltages = [81.6708 81.6708 81.6708]; % [V]
+nominalCurrents = [sqrt(2) sqrt(2) sqrt(2)]; %[A]
 nominalFrequency = 50;
 voltageAngles = [0 -120 120]; % [°]
 currentAngles = [0 -120 120]; % [°]
 %% Time parameters
-Ts = 0.25; % [kSps] kilo samples per seconds
-timeMax = 1; % [s]
+Ts = 25; % [kSps] kilo samples per seconds
+timeMax = 10; % [s]
 
 %% Mains Signaling Voltage
 ifMSIG = 0;
@@ -28,7 +28,7 @@ voltageAngleOfMSIG = [0 -120 120]; % [°]
 
 %% Harmonics
 ifVoltageHarmonics = 0; % 1 if Voltage Harmonics (HU) are use, 0 if not
-ifCurrentHarmonics = 1; % 1 if Current Harmonics (HI) are use, 0 if not
+ifCurrentHarmonics = 0; % 1 if Current Harmonics (HI) are use, 0 if not
 
 voltageHarmonicsOrder = {[3 5];[3 5];[7 3]}; % [order of HU] {[HU_L1],[HU_L2],[HU_L3]}
 currentHarmonicsOrder = {[3 5],[3 5],[3 5 7]}; % [order of HI] {[HI_L1],[HI_L2],[HI_L3]}
@@ -46,7 +46,7 @@ HIParametersCorrect = CheckHarmonicsParameters("HI",currentHarmonicsOrder,curren
 % n-th IH = (n-0.5)*nominalFrequency
 % for example 4th IHU = 3.5 * 50Hz = 175Hz
 ifVoltageInterharmonics = 0; % 1 if Voltage Interharmonics (IHU) are use, 0 if not
-ifCurrentInterharmonics = 1; % 1 if Current Interharmonics (IHI) are use, 0 if not
+ifCurrentInterharmonics = 0; % 1 if Current Interharmonics (IHI) are use, 0 if not
 
 voltageInterharmonicsOrder = {[3 5];[3 5];[7 39]}; % [order of IHU] {[IHU_L1],[IHU_L2],[IHU_L3]}
 currentInterharmonicsOrder = {[3 5],[3 5],[3 5 7]}; % [order of IHI] {[IHI_L1],[IHI_L2],[IHI_L3]}
@@ -66,38 +66,38 @@ U = zeros(3,size(time,2));
 I = zeros(3,size(time,2));
 for i = 1:3
     % Phase Voltage and Current
-    U(i,:) = nominalVoltages(i)*sqrt(3)*sin(2*pi*nominalFrequency.*time+deg2rad(voltageAngles(i)));
-    I(i,:) = nominalCurrents(i)*sqrt(3)*sin(2*pi*nominalFrequency.*time+deg2rad(currentAngles(i)));
+    U(i,:) = nominalVoltages(i)*sin(2*pi*nominalFrequency.*time+deg2rad(voltageAngles(i)));
+    I(i,:) = nominalCurrents(i)*sin(2*pi*nominalFrequency.*time+deg2rad(currentAngles(i)));
     
     % HU
     if HUParametersCorrect == 1
         for j = 1:size(voltageHarmonicsOrder{i},2)
-            U(i,:) = U(i,:) + voltageHarmonicsValue{i}(j)/100*nominalVoltages(i)*sqrt(3)*sin(2*pi*voltageHarmonicsOrder{i}(j)*nominalFrequency.*time+deg2rad(voltageAngles(i))+deg2rad(voltageHarmonicsAngle{i}(j)));
+            U(i,:) = U(i,:) + voltageHarmonicsValue{i}(j)/100*nominalVoltages(i)*sin(2*pi*voltageHarmonicsOrder{i}(j)*nominalFrequency.*time+deg2rad(voltageAngles(i))+deg2rad(voltageHarmonicsAngle{i}(j)));
         end
     end
     
     %HI
     if HIParametersCorrect == 1
         for j = 1:size(currentHarmonicsOrder{i},2)
-            I(i,:) = I(i,:) + currentHarmonicsValue{i}(j)/100*nominalCurrents(i)*sqrt(3)*sin(2*pi*currentHarmonicsOrder{i}(j)*nominalFrequency.*time+deg2rad(currentAngles(i))+deg2rad(currentHarmonicsAngle{i}(j)));
+            I(i,:) = I(i,:) + currentHarmonicsValue{i}(j)/100*nominalCurrents(i)*sin(2*pi*currentHarmonicsOrder{i}(j)*nominalFrequency.*time+deg2rad(currentAngles(i))+deg2rad(currentHarmonicsAngle{i}(j)));
         end
     end
     
     % IHU
     if IHUParametersCorrect == 1
         for j = 1:size(voltageInterharmonicsOrder{i},2)
-            U(i,:) = U(i,:) + voltageInterharmonicsValue{i}(j)/100*nominalVoltages(i)*sqrt(3)*sin(2*pi*(voltageInterharmonicsOrder{i}(j)-0.5)*nominalFrequency.*time+deg2rad(voltageAngles(i))+deg2rad(voltageInterharmonicsAngle{i}(j)));
+            U(i,:) = U(i,:) + voltageInterharmonicsValue{i}(j)/100*nominalVoltages(i)*sin(2*pi*(voltageInterharmonicsOrder{i}(j)-0.5)*nominalFrequency.*time+deg2rad(voltageAngles(i))+deg2rad(voltageInterharmonicsAngle{i}(j)));
         end
     end
     
     %IHI
     if IHIParametersCorrect == 1
         for j = 1:size(currentInterharmonicsOrder{i},2)
-            I(i,:) = I(i,:) + currentInterharmonicsValue{i}(j)/100*nominalCurrents(i)*sqrt(3)*sin(2*pi*(currentInterharmonicsOrder{i}(j)-0.5)*nominalFrequency.*time+currentAngles(i)+deg2rad(currentInterharmonicsAngle{i}(j)));
+            I(i,:) = I(i,:) + currentInterharmonicsValue{i}(j)/100*nominalCurrents(i)*sin(2*pi*(currentInterharmonicsOrder{i}(j)-0.5)*nominalFrequency.*time+currentAngles(i)+deg2rad(currentInterharmonicsAngle{i}(j)));
         end
     end
     if ifMSIG == 1
-       U(i,:) = U(i,:) + nominalVoltages(i)*valueOfMSIG(i)/100*sqrt(3)*sin(2*pi*frequencyOfMSIG.*time+deg2rad(voltageAngleOfMSIG(i)));
+       U(i,:) = U(i,:) + nominalVoltages(i)*valueOfMSIG(i)/100*sin(2*pi*frequencyOfMSIG.*time+deg2rad(voltageAngleOfMSIG(i)));
     end
 end
 
@@ -110,7 +110,7 @@ writetable(table(cat(2,U',I')),"data.csv");
 % L = Ts*1000*timeMax;
 % t = (0:L)*T;
 % plot(Ts*1000/L*(0:L),abs(Y))
-%plot(time,U(1,:),time,U(2,:),time,U(3,:))
+plot(time,U(1,:),time,U(2,:),time,U(3,:))
 
 
 %% Extra functions
