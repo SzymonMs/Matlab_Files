@@ -14,8 +14,8 @@ clc;
 nominalVoltages = [81.6708 81.6708 81.6708]; % [V]
 nominalCurrents = [sqrt(2) sqrt(2) sqrt(2)]; %[A]
 nominalFrequency = 50;
-voltageAngles = [0 -180 60]; % [°]
-currentAngles = [-60 -180 60]; % [°]
+voltageAngles = [0 -120 120]; % [°]
+currentAngles = [-45 -165 75]; % [°]
 %% Time parameters
 Ts = 12.5; % [kSps] kilo samples per seconds
 timeMax = 10; % [s]
