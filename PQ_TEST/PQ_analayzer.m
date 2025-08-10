@@ -89,7 +89,16 @@ for i = 1:3
    apparentPower200msSamples(:,i) = voltage200msSamples(:,i).*current200msSamples(:,i);
 end
 apparentPower200msSamples(:,4) = apparentPower200msSamples(:,1)+apparentPower200msSamples(:,2)+apparentPower200msSamples(:,3);
-
+%%  Frequency 200ms
+Frequency200msSamples = zeros(size(voltageSamples(:,1),2),1);
+    for j = 1:numberOfWindows200Cycle
+        idxStart = (j-1)*samplesIn200ms+1;
+        idxEnd = j*samplesIn200ms;
+        tempU = fft(voltageSamples(idxStart:idxEnd,1));
+        frequenceU = (0:size(tempU,1)-1) * (Ts*1000/size(tempU,1));
+        [~, idx50U] = max(abs(tempU));
+        Frequency200msSamples(j) = frequenceU(idx50U);
+    end
 %% Data Save to CSV Files
 dirName = "PQ_data";
 if ~exist(dirName, 'dir')
@@ -103,6 +112,7 @@ writetable(table(cat(1,activePower200msSamples)),strcat(dirName,"/P_s.csv"));
 writetable(table(cat(1,reactivePower200msSamples)),strcat(dirName,"/Q_s.csv"));
 writetable(table(cat(1,apparentPower200msSamples)),strcat(dirName,"/S_s.csv"));
 writetable(table(cat(1,agnles200msSamples)),strcat(dirName,"/ANG_s.csv"));
+writetable(table(cat(1,Frequency200msSamples)),strcat(dirName,"/F_s.csv"));
 clear dirName
 %% Clean workspace
 clear i j idxEnd idxStart;

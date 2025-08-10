@@ -13,7 +13,7 @@ clc;
 %% Basic Energy parameters
 nominalVoltages = [81.6708 81.6708 81.6708]; % [V]
 nominalCurrents = [sqrt(2) sqrt(2) sqrt(2)]; %[A]
-nominalFrequency = 50;
+nominalFrequency = 40;
 voltageAngles = [0 -120 120]; % [°]
 currentAngles = [-45 -165 75]; % [°]
 %% Time parameters
