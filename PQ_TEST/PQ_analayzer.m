@@ -1,5 +1,6 @@
 % data_generator.m
-% Description: script for calculating PQ parameters (PN-EN 50160).
+% Description: script for calculating PQ parameters (PN-EN 50160 - It would
+% be nice :)).
 %
 % Author: Szymon Murawski
 % Created: 2025-07-18
@@ -62,7 +63,7 @@ for i = 1:3
         [~, idx50I] = min(abs(frequenceI-nominalFrequency));
         agnles200msSamples(j,i) = rad2deg(angle(tempU(idx50U))-angle(firstPhaseFFT(idx50U)));
         agnles200msSamples(j,i+3) = rad2deg(angle(tempI(idx50I))-angle(firstPhaseFFT(idx50U)));
-        clear tempU tempI idx50U idx50I frequenceI frequenceU;
+%         clear tempU tempI idx50U idx50I frequenceI frequenceU;
     end
 end
 %% Phase-to-phase voltage 200ms
@@ -89,7 +90,7 @@ for i = 1:3
    apparentPower200msSamples(:,i) = voltage200msSamples(:,i).*current200msSamples(:,i);
 end
 apparentPower200msSamples(:,4) = apparentPower200msSamples(:,1)+apparentPower200msSamples(:,2)+apparentPower200msSamples(:,3);
-%%  Frequency 200ms
+%% Frequency 200ms
 Frequency200msSamples = zeros(size(voltageSamples(:,1),2),1);
     for j = 1:numberOfWindows200Cycle
         idxStart = (j-1)*samplesIn200ms+1;
@@ -99,6 +100,23 @@ Frequency200msSamples = zeros(size(voltageSamples(:,1),2),1);
         [~, idx50U] = max(abs(tempU));
         Frequency200msSamples(j) = frequenceU(idx50U);
     end
+    Frequency200msSamples = Frequency200msSamples'; 
+%%  Voltage Harmonics 200ms
+HU200msSamples = zeros(size(voltageSamples(:,1),2),150); % I assume that max order of voltage harmonics is 50th. We have 3-phase system. 50*3=150
+    for i = 1:3
+        for j = 1:50
+            for k = 1:numberOfWindows200Cycle
+                idxStart = (k-1)*samplesIn200ms+1;
+                idxEnd = k*samplesIn200ms;
+                tempU = fft(voltageSamples(idxStart:idxEnd,i));
+                tempU=tempU/size(tempU,1);
+                frequenceU = (0:size(tempU,1)-1) * (Ts*1000/size(tempU,1));
+                [~,idxHU_jF]=min(abs(frequenceU-nominalFrequency*j));
+                HU200msSamples(k,i*j) = abs(tempU(idxHU_jF))/nominalVoltagesRMS(1,i)*100;                
+            end
+        end
+    end
+
 %% Data Save to CSV Files
 dirName = "PQ_data";
 if ~exist(dirName, 'dir')
