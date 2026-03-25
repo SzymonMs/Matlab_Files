@@ -13,11 +13,11 @@ clc;
 %% Basic Energy parameters
 nominalVoltages = [57.74 57.74 57.74]; % [V]
 nominalCurrents = [1 1 1]; %[A]
-nominalFrequency = 48.2;
+nominalFrequency = 50;
 voltageAngles = [0 -120 120]; % [°]
 currentAngles = [0 -120 120]; % [°]
 %% Time parameters
-Ts = 12.5; % [kSps] kilo samples per seconds
+Ts = 12.8; % [kSps] kilo samples per seconds
 timeMax = 10; % [s]
 
 %% Mains Signaling Voltage
